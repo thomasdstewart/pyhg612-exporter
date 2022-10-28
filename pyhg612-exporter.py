@@ -34,7 +34,7 @@ class HG612Metrics:
         self.bearerrate_up = prometheus_client.Gauge('pyhg612_bearerrate_up', 'Bearer Rate Up')
         self.bearerrate_down = prometheus_client.Gauge('pyhg612_bearerrate_down', 'Bearer Rate Down')
         self.snr_up = prometheus_client.Gauge('pyhg612_snr_up', 'SNR Up')
-        self.snr_down = prometheus_client.Gauge('pyhg612_nr_down', 'SNR Down')
+        self.snr_down = prometheus_client.Gauge('pyhg612_snr_down', 'SNR Down')
         self.attn_up = prometheus_client.Gauge('pyhg612_attn_up', 'Attn Up')
         self.attn_down = prometheus_client.Gauge('pyhg612_attn_down', 'Attn Down')
         self.pwr_up = prometheus_client.Gauge('pyhg612_pwr_up', 'Pwr Up')
