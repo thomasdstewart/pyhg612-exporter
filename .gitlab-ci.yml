@@ -1,0 +1,5 @@
+---
+# https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Docker.gitlab-ci.yml
+include:
+  - remote: https://gitlab.com/thomasdstewart-infra/docker-linter/-/raw/main/linter.gitlab-ci.yml
+  - template: Docker.gitlab-ci.yml

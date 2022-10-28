@@ -1,0 +1,35 @@
+kind: pipeline
+type: docker
+platform:
+  os: linux
+  arch: arm64
+steps:
+  - name: build
+    image: docker.io/library/debian:bullseye
+    environment:
+      REGISTRY_USERNAME:
+        from_secret: registry_username
+      REGISTRY_PASSWORD:
+        from_secret: registry_password
+      REGISTRY_HOST: registry.stewarts.org.uk
+      REGISTRY_TAG: pyhg612-exporter:latest
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock 
+    commands:
+      - apt-get update
+      - apt-get -y install docker.io
+      - docker build --pull --tag $REGISTRY_HOST/$REGISTRY_TAG-amd64 --build-arg ARCH=amd64 .
+      - docker build --pull --tag $REGISTRY_HOST/$REGISTRY_TAG-arm32v7 --build-arg ARCH=arm32v7 .
+      - docker build --pull --tag $REGISTRY_HOST/$REGISTRY_TAG-arm64v8 --build-arg ARCH=arm64v8 .
+      - echo "$REGISTRY_PASSWORD" | docker login --username "$REGISTRY_USERNAME" --password-stdin $REGISTRY_HOST
+      - docker push $REGISTRY_HOST/$REGISTRY_TAG-amd64
+      - docker push $REGISTRY_HOST/$REGISTRY_TAG-arm32v7
+      - docker push $REGISTRY_HOST/$REGISTRY_TAG-arm64v8
+      - docker manifest create $REGISTRY_HOST/$REGISTRY_TAG --amend $REGISTRY_HOST/$REGISTRY_TAG-amd64 --amend $REGISTRY_HOST/$REGISTRY_TAG-arm32v7 --amend $REGISTRY_HOST/$REGISTRY_TAG-arm64v8
+      - docker manifest push $REGISTRY_HOST/$REGISTRY_TAG
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
