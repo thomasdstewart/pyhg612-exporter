@@ -1,4 +1,3 @@
-
 FROM docker.io/debian:bullseye
 
 LABEL name="pyhg612-exporter"
