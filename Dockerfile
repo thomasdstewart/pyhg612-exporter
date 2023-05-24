@@ -1,7 +1,6 @@
-ARG ARCH=
-FROM docker.io/${ARCH}/debian:bullseye
 
-FROM docker.io/${ARCH}/debian:bullseye
+FROM docker.io/debian:bullseye
+
 LABEL name="pyhg612-exporter"
 LABEL url="https://gitub.com/thomasdstewart/pyhg612-exporter"
 LABEL maintainer="thomas@stewarts.org.uk"
