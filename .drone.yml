@@ -20,4 +20,4 @@ steps:
       - podman push $REGISTRY_HOST/$REGISTRY_TAG-linux-amd64
       - podman push $REGISTRY_HOST/$REGISTRY_TAG-linux-arm64v8
       - podman manifest create $REGISTRY_HOST/$REGISTRY_TAG $REGISTRY_HOST/$REGISTRY_TAG-linux-amd64 $REGISTRY_HOST/$REGISTRY_TAG-linux-arm64v8
-      - podman manifest push $REGISTRY_HOST/$REGISTRY_TAG
+      - podman manifest push $REGISTRY_HOST/$REGISTRY_TAG docker://$REGISTRY_HOST/$REGISTRY_TAG
