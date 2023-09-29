@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''
 pyhg612-exporter - Python HG612 Prometheus Exporter
-Copyright 2022 Thomas Stewart <thomas@stewarts.org.uk>
+Copyright 2023 Thomas Stewart <thomas@stewarts.org.uk>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,9 +20,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os
 import prometheus_client
 import re
+import socket
 import sys
-import time
 import telnetlib
+import time
 from pprint import pprint as pp
 
 class HG612Metrics:
@@ -76,7 +77,15 @@ class HG612Metrics:
         user = os.getenv('MODEM_USER', 'admin')
         password = os.getenv('MODEM_PASSWORD', 'admin')
 
-        tn = telnetlib.Telnet(host)
+        try:
+            tn = telnetlib.Telnet(host)
+        except:
+            print("error connecting")
+            self.raw_data = ''
+            return
+
+        #conn = socket.create_connection(host, user),timeout=30)
+
         #tn.set_debuglevel(2)
 
         tn.read_until(b'Login:')
