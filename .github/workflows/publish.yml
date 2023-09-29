@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: my-docker-hub-namespace/my-docker-hub-repository
+          images: thomasdstewart/pyhg612-exporter
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
